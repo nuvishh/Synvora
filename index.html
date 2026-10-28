@@ -68,7 +68,7 @@
 <header class="top">
   <h1>🤖 Syn<span>vora</span></h1>
   <p>Where Ideas Meet AI — find the right AI for the job, and the right words to use it. 100% free, no sign-up.</p>
-  <div class="stats"><span class="stat">🛠️ 36 AI tools</span><span class="stat">💬 20 prompts</span><span class="stat">✨ 100% free, no sign-up</span></div>
+  <div class="stats"><span class="stat">🛠️ 36 AI tools</span><span class="stat">💬 24 prompts</span><span class="stat">✨ 100% free, no sign-up</span></div>
 </header>
 <div class="toolbar">
   <input id="q" placeholder="Search tools or prompts…">
@@ -189,6 +189,10 @@ const PROMPTS = [
   {t:'Debug my code', c:'Coding', x:'This code throws this error: [error]. Here is the code: [paste code]. Find the bug, explain why it happens, and give the fixed code.'},
   {t:'Write a regex', c:'Coding', x:'Write a regular expression that matches [describe pattern, e.g. email addresses]. Explain each part of the regex briefly, and give 3 examples that match and 2 that do not.'},
   {t:'Code review', c:'Coding', x:'Review the following code for bugs, performance issues, and readability. List issues by severity and suggest fixes with example code: [paste code]'},
+  {t:'Fix a bug properly', c:'Coding', x:'I have a bug: [describe the bug and how to reproduce it]. Here is the relevant code: [paste code]. The expected behavior is: [expected]. 1) Help me reproduce and isolate the issue, 2) explain the root cause in simple terms, 3) give the fixed code, 4) tell me how to verify the fix works, and 5) suggest one change that would prevent this bug from coming back.'},
+  {t:'Fix with minimal changes', c:'Coding', x:'Fix this bug with the smallest possible change: [describe the bug]. Code: [paste code]. Do not refactor unrelated code or change the structure. Explain what caused it, show only the lines that change, and warn me about any side effects or edge cases your fix might introduce.'},
+  {t:'Add a new feature', c:'Coding', x:'I want to add this feature: [describe the feature and who it is for]. Here is the existing code it touches: [paste relevant code]. 1) First explain how the current code works in brief, 2) give a step-by-step implementation plan, 3) write the new code following the existing style, 4) list edge cases to handle, and 5) suggest how to test it.'},
+  {t:'Plan a feature first', c:'Coding', x:'Before writing code, plan this feature for me: [describe the feature]. Current stack/codebase: [details]. Break it into small steps, list the files or functions that will change, note any API or database changes, flag risks and unknowns, and tell me what to build first. No code yet — plan only.'},
   {t:'Ad copy variations', c:'Marketing', x:'Write 5 ad copy variations for [product/service]. Target audience: [audience]. Each under 25 words, each with a different angle: emotional, logical, funny, urgent, and social proof.'},
   {t:'Instagram captions', c:'Marketing', x:'Write 5 Instagram captions for [post topic]. Include relevant hashtags and a call to action. Tone: [fun / professional / inspirational].'},
   {t:'SEO blog titles', c:'Marketing', x:'Give me 10 SEO-friendly blog titles for the keyword [keyword]. Mix how-to, listicle, and question formats. Keep each under 60 characters.'},
