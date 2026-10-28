@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synvora — Where Ideas Meet AI</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: #f1f5f9; color: #111827; }
+  header.top { background: #1e3a5f; color: #fff; padding: 22px; }
+  header.top h1 { font-size: 30px; }
+  header.top h1 span { color: #a78bfa; }
+  header.top p { color: #cbd5e1; margin-top: 6px; font-size: 14.5px; }
+  .toolbar { max-width: 1200px; margin: 0 auto; padding: 18px 20px 0; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .toolbar input { flex: 1; min-width: 220px; padding: 11px 14px; border: 1.5px solid #d1d5db; border-radius: 10px; font-size: 15px; font-family: inherit; }
+  .toolbar input:focus { outline: none; border-color: #7c3aed; }
+  #count { font-size: 13.5px; color: #6b7280; white-space: nowrap; }
+  .tabs { max-width: 1200px; margin: 0 auto; padding: 14px 20px 0; display: flex; gap: 10px; }
+  .tab { padding: 10px 18px; border-radius: 999px; border: 2px solid #d1d5db; background: #fff; font-weight: 700; cursor: pointer; font-size: 14.5px; font-family: inherit; }
+  .tab.on { background: #7c3aed; border-color: #7c3aed; color: #fff; }
+  main { max-width: 1200px; margin: 0 auto; padding: 16px 20px 30px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .chip { padding: 7px 14px; border-radius: 999px; border: 1.5px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13.5px; font-weight: 600; font-family: inherit; }
+  .chip.on { background: #1e3a5f; border-color: #1e3a5f; color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card { display: block; background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,.07); text-decoration: none; color: inherit; }
+  a.card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+  .card .row { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+  .card .nm { font-size: 17px; font-weight: 800; }
+  .badge { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .p-Free { background: #dcfce7; color: #15803d; }
+  .p-Freemium { background: #fef3c7; color: #92400e; }
+  .p-Paid { background: #e2e8f0; color: #475569; }
+  .cat { font-size: 11.5px; letter-spacing: 1px; text-transform: uppercase; color: #7c3aed; font-weight: 700; margin-top: 4px; }
+  .desc { font-size: 14px; color: #4b5563; margin-top: 8px; line-height: 1.55; }
+  .go { font-size: 13.5px; font-weight: 700; color: #7c3aed; margin-top: 12px; }
+  .prompt { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; font-size: 13.5px; line-height: 1.6; white-space: pre-wrap; margin-top: 10px; }
+  .copy { margin-top: 12px; background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .empty { text-align: center; color: #6b7280; padding: 40px 10px; font-size: 15px; }
+  .tools { max-width: 1200px; margin: 0 auto; padding: 0 20px 30px; }
+  .tools h2 { font-size: 20px; color: #1e3a5f; margin-bottom: 14px; }
+  .share-sec { text-align: center; padding: 10px 20px 26px; }
+  .share-sec h2 { font-size: 20px; color: #1e3a5f; margin-bottom: 14px; }
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .tool-card { display: block; background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,.07); text-decoration: none; color: inherit; border-top: 4px solid var(--acc, #1e3a5f); }
+  .tool-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+  .tool-card .ic { font-size: 28px; }
+  .tool-card .nm { font-size: 17px; font-weight: 800; color: #1e3a5f; margin-top: 8px; }
+  .tool-card .ct { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--acc, #1e3a5f); font-weight: 700; margin-top: 2px; }
+  .tool-card .ds { font-size: 13.5px; color: #4b5563; margin-top: 6px; line-height: 1.5; }
+  .tool-card .go { font-size: 13.5px; font-weight: 700; color: var(--acc, #1e3a5f); margin-top: 10px; }
+  footer.page { text-align: center; font-size: 13px; color: #6b7280; padding: 10px 20px 26px; line-height: 1.6; }
+  footer.page b { color: #e11d48; }
+  @media (max-width: 600px) {
+    header.top { padding: 16px; }
+    header.top h1 { font-size: 26px; }
+    .toolbar input { min-width: 0; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>🤖 Syn<span>vora</span></h1>
+  <p>Where Ideas Meet AI — find the right AI for the job, and the right words to use it. 100% free, no sign-up.</p>
+</header>
+<div class="toolbar">
+  <input id="q" placeholder="Search tools or prompts…">
+  <span id="count"></span>
+</div>
+<div class="tabs">
+  <button class="tab on" id="tabTools" onclick="showTab('tools')">🛠️ AI Tools</button>
+  <button class="tab" id="tabPrompts" onclick="showTab('prompts')">💬 Prompts</button>
+</div>
+<main>
+  <section id="toolsSec">
+    <div class="chips" id="toolChips">
+      <button class="chip on" onclick="setCat('tools','All',this)">All</button>
+      <button class="chip" onclick="setCat('tools','Chat',this)">Chat</button>
+      <button class="chip" onclick="setCat('tools','Image',this)">Image</button>
+      <button class="chip" onclick="setCat('tools','Video',this)">Video</button>
+      <button class="chip" onclick="setCat('tools','Code',this)">Code</button>
+      <button class="chip" onclick="setCat('tools','Writing',this)">Writing</button>
+      <button class="chip" onclick="setCat('tools','Audio',this)">Audio</button>
+      <button class="chip" onclick="setCat('tools','Productivity',this)">Productivity</button>
+    </div>
+    <div class="grid" id="toolGrid"></div>
+  </section>
+  <section id="promptsSec" style="display:none">
+    <div class="chips" id="promptChips">
+      <button class="chip on" onclick="setCat('prompts','All',this)">All</button>
+      <button class="chip" onclick="setCat('prompts','Writing',this)">Writing</button>
+      <button class="chip" onclick="setCat('prompts','Coding',this)">Coding</button>
+      <button class="chip" onclick="setCat('prompts','Marketing',this)">Marketing</button>
+      <button class="chip" onclick="setCat('prompts','Study',this)">Study</button>
+      <button class="chip" onclick="setCat('prompts','Business',this)">Business</button>
+      <button class="chip" onclick="setCat('prompts','Image',this)">Image</button>
+      <button class="chip" onclick="setCat('prompts','Fun',this)">Fun</button>
+    </div>
+    <div class="grid" id="promptGrid"></div>
+  </section>
+</main>
+<section class="share-sec">
+  <h2>Share this tool</h2>
+  <button class="tab on" onclick="shareTool(this)">↗ Share this tool</button>
+</section>
+<section class="tools">
+  <h2>More free tools by nuvish</h2>
+  <div class="tools-grid">
+    <a class="tool-card" style="--acc:#4f46e5" href="https://nuvishh.github.io/Beamo-Web/" target="_blank" rel="noopener">
+      <div class="ic">📤</div><div class="nm">Beamo Web</div><div class="ct">File sharing</div>
+      <div class="ds">Share files between browsers — no app, no uploads, fully private.</div>
+      <div class="go">Open →</div>
+    </a>
+    <a class="tool-card" style="--acc:#e11d48" href="https://nuvishh.github.io/LinkGrid/" target="_blank" rel="noopener">
+      <div class="ic">🔳</div><div class="nm">LinkGrid</div><div class="ct">QR codes</div>
+      <div class="ds">QR codes that never expire, in your style — links, WiFi, UPI and more.</div>
+      <div class="go">Open →</div>
+    </a>
+    <a class="tool-card" style="--acc:#0f766e" href="https://nuvishh.github.io/SlimByte/" target="_blank" rel="noopener">
+      <div class="ic">🖼️</div><div class="nm">SlimByte</div><div class="ct">Images</div>
+      <div class="ds">Compress images right in your browser — private, fast, no uploads.</div>
+      <div class="go">Open →</div>
+    </a>
+    <a class="tool-card" style="--acc:#c026d3" href="https://nuvishh.github.io/InstaKit/" target="_blank" rel="noopener">
+      <div class="ic">📸</div><div class="nm">InstaKit</div><div class="ct">Instagram</div>
+      <div class="ds">Find who does not follow you back, plus fans, mutuals and more.</div>
+      <div class="go">Open →</div>
+    </a>
+    <a class="tool-card" style="--acc:#1e3a5f" href="https://nuvishh.github.io/InvoKit/" target="_blank" rel="noopener">
+      <div class="ic">🧾</div><div class="nm">InvoKit</div><div class="ct">Invoices</div>
+      <div class="ds">Free GST invoice generator with templates, discount and shipping.</div>
+      <div class="go">Open →</div>
+    </a>
+  </div>
+</section>
+<footer class="page">Made with <b>♥</b> by nuvish · Listings are curated — pricing may change, check the tool's site.</footer>
+<script>
+const $ = id => document.getElementById(id);
+const TOOLS = [
+  {n:'ChatGPT', d:'The most popular AI chatbot for writing, coding, brainstorming and everyday questions.', c:'Chat', p:'Freemium', u:'https://chatgpt.com'},
+  {n:'Claude', d:'Anthropic AI assistant known for long documents, careful reasoning and coding.', c:'Chat', p:'Freemium', u:'https://claude.ai'},
+  {n:'Gemini', d:'Google AI chatbot built into Search, Gmail and Android, with live web access.', c:'Chat', p:'Freemium', u:'https://gemini.google.com'},
+  {n:'Copilot', d:'Microsoft AI assistant in Windows, Edge and Office for chat, search and drafting.', c:'Chat', p:'Freemium', u:'https://copilot.microsoft.com'},
+  {n:'Meta AI', d:'Free AI assistant inside WhatsApp, Instagram and Facebook.', c:'Chat', p:'Free', u:'https://meta.ai'},
+  {n:'Perplexity', d:'AI search engine that answers with sources cited.', c:'Chat', p:'Freemium', u:'https://perplexity.ai'},
+  {n:'DeepSeek', d:'Low-cost, high-quality AI chatbot and reasoning models.', c:'Chat', p:'Freemium', u:'https://deepseek.com'},
+  {n:'Midjourney', d:'The go-to AI image generator for artistic, high-quality images.', c:'Image', p:'Paid', u:'https://midjourney.com'},
+  {n:'DALL·E', d:'OpenAI image generator inside ChatGPT, great at following detailed prompts.', c:'Image', p:'Freemium', u:'https://openai.com/index/dall-e-3/'},
+  {n:'Stable Diffusion', d:'Open-source image model you can run free on your own computer.', c:'Image', p:'Free', u:'https://stability.ai'},
+  {n:'Flux', d:'Fast, realistic image generation from Black Forest Labs.', c:'Image', p:'Freemium', u:'https://blackforestlabs.ai'},
+  {n:'Ideogram', d:'AI image generator that renders text inside images unusually well.', c:'Image', p:'Freemium', u:'https://ideogram.ai'},
+  {n:'Leonardo AI', d:'Image generator with fine-tuned styles for game art, illustration and design.', c:'Image', p:'Freemium', u:'https://leonardo.ai'},
+  {n:'Adobe Firefly', d:'Commercially safe image generation built into Photoshop and Adobe tools.', c:'Image', p:'Freemium', u:'https://firefly.adobe.com'},
+  {n:'Runway', d:'AI video generation and editing tools for creators and studios.', c:'Video', p:'Freemium', u:'https://runwayml.com'},
+  {n:'Pika', d:'Turn text or images into short AI video clips.', c:'Video', p:'Freemium', u:'https://pika.art'},
+  {n:'Sora', d:'OpenAI text-to-video model for realistic, longer video scenes.', c:'Video', p:'Paid', u:'https://sora.com'},
+  {n:'Kling', d:'High-quality AI video generator, strong at motion and realism.', c:'Video', p:'Freemium', u:'https://klingai.com'},
+  {n:'HeyGen', d:'AI avatar videos: type text, get a talking presenter video.', c:'Video', p:'Freemium', u:'https://heygen.com'},
+  {n:'Synthesia', d:'Business AI videos with avatars in 140+ languages, no camera needed.', c:'Video', p:'Paid', u:'https://synthesia.io'},
+  {n:'GitHub Copilot', d:'AI pair programmer that autocompletes code in your editor.', c:'Code', p:'Freemium', u:'https://github.com/features/copilot'},
+  {n:'Cursor', d:'AI-first code editor built for chatting with and editing your codebase.', c:'Code', p:'Freemium', u:'https://cursor.com'},
+  {n:'Windsurf', d:'Agentic AI IDE that plans and writes multi-file changes.', c:'Code', p:'Freemium', u:'https://windsurf.com'},
+  {n:'Tabnine', d:'Private, fast AI code completion for teams and individuals.', c:'Code', p:'Freemium', u:'https://tabnine.com'},
+  {n:'Replit AI', d:'Build and ship apps in the browser with AI help.', c:'Code', p:'Freemium', u:'https://replit.com'},
+  {n:'Jasper', d:'AI writing platform for marketing copy, blogs and brand voice.', c:'Writing', p:'Paid', u:'https://jasper.ai'},
+  {n:'Copy.ai', d:'AI copywriter for ads, emails and social posts.', c:'Writing', p:'Freemium', u:'https://copy.ai'},
+  {n:'Grammarly', d:'Grammar, clarity and tone checker with AI rewriting.', c:'Writing', p:'Freemium', u:'https://grammarly.com'},
+  {n:'Notion AI', d:'AI writing and summaries inside Notion docs and wikis.', c:'Writing', p:'Paid', u:'https://notion.so'},
+  {n:'ElevenLabs', d:'The most realistic AI voices for narration, dubbing and voiceovers.', c:'Audio', p:'Freemium', u:'https://elevenlabs.io'},
+  {n:'Suno', d:'Generate full songs from a text prompt in seconds.', c:'Audio', p:'Freemium', u:'https://suno.com'},
+  {n:'Udio', d:'AI music generator for songs with vocals in many styles.', c:'Audio', p:'Freemium', u:'https://udio.com'},
+  {n:'Murf AI', d:'Studio-quality AI voiceovers for videos and presentations.', c:'Audio', p:'Freemium', u:'https://murf.ai'},
+  {n:'Otter.ai', d:'AI meeting notes: live transcription, summaries and action items.', c:'Productivity', p:'Freemium', u:'https://otter.ai'},
+  {n:'Fireflies', d:'AI assistant that records, transcribes and searches meetings.', c:'Productivity', p:'Freemium', u:'https://fireflies.ai'},
+  {n:'Motion', d:'AI calendar and task manager that auto-plans your day.', c:'Productivity', p:'Paid', u:'https://motion.app'}
+];
+const PROMPTS = [
+  {t:'Blog post outline', c:'Writing', x:'Write a detailed outline for a blog post about [topic]. Audience: [audience]. Include a strong intro hook, 5 main sections with sub-points, and a conclusion with a call to action.'},
+  {t:'Rewrite in simple English', c:'Writing', x:'Rewrite the following text in simple, clear English that a 15-year-old can understand. Keep all key facts, remove jargon, and keep the same tone: [paste text]'},
+  {t:'Professional email', c:'Writing', x:'Write a short, polite, professional email about [subject]. Context: [details]. Tone: friendly but formal. Keep it under 120 words.'},
+  {t:'Explain this code', c:'Coding', x:'Explain the following code line by line in simple terms. Then summarize what it does in one paragraph and point out any risky parts: [paste code]'},
+  {t:'Debug my code', c:'Coding', x:'This code throws this error: [error]. Here is the code: [paste code]. Find the bug, explain why it happens, and give the fixed code.'},
+  {t:'Write a regex', c:'Coding', x:'Write a regular expression that matches [describe pattern, e.g. email addresses]. Explain each part of the regex briefly, and give 3 examples that match and 2 that do not.'},
+  {t:'Code review', c:'Coding', x:'Review the following code for bugs, performance issues, and readability. List issues by severity and suggest fixes with example code: [paste code]'},
+  {t:'Ad copy variations', c:'Marketing', x:'Write 5 ad copy variations for [product/service]. Target audience: [audience]. Each under 25 words, each with a different angle: emotional, logical, funny, urgent, and social proof.'},
+  {t:'Instagram captions', c:'Marketing', x:'Write 5 Instagram captions for [post topic]. Include relevant hashtags and a call to action. Tone: [fun / professional / inspirational].'},
+  {t:'SEO blog titles', c:'Marketing', x:'Give me 10 SEO-friendly blog titles for the keyword [keyword]. Mix how-to, listicle, and question formats. Keep each under 60 characters.'},
+  {t:'Explain like I am 12', c:'Study', x:'Explain [topic] to me like I am 12 years old. Use a real-life analogy, keep it under 200 words, and end with one fun fact.'},
+  {t:'Quiz me', c:'Study', x:'Quiz me on [topic] with 5 questions, one at a time. Wait for my answer after each question, then tell me if I was right and explain briefly.'},
+  {t:'Notes to flashcards', c:'Study', x:'Turn these notes into 10 flashcard-style question and answer pairs. Keep answers under 20 words each: [paste notes]'},
+  {t:'Validate a business idea', c:'Business', x:'Validate this business idea: [idea]. Who is the target customer, what problem does it solve, who are 3 competitors, what is the biggest risk, and what is the first test I should run?'},
+  {t:'Resume bullet improver', c:'Business', x:'Rewrite these resume bullet points with strong action verbs and measurable results. Keep each bullet to one line: [paste bullets]'},
+  {t:'Meeting agenda', c:'Business', x:'Create a 30-minute meeting agenda for [meeting purpose]. Attendees: [roles]. Include time blocks, one decision to be made, and action items at the end.'},
+  {t:'Portrait photo prompt', c:'Image', x:'A cinematic portrait photograph of [subject], soft golden-hour light, shallow depth of field, 85mm lens, ultra realistic, high detail'},
+  {t:'Logo design prompt', c:'Image', x:'Minimalist logo for [brand], [style: modern / playful / luxury], flat vector style, simple shapes, [colors], clean background, professional branding'},
+  {t:'Story starter', c:'Fun', x:'Start a short story with this premise: [premise]. Write the first 200 words with a strong hook and one surprising twist at the end.'},
+  {t:'Travel itinerary', c:'Fun', x:'Plan a [number]-day trip to [place] on a budget of [budget]. Include must-see places, local food to try, and one offbeat experience per day.'}
+];
+let tab = 'tools', toolCat = 'All', promptCat = 'All', q = '';
+let shownPrompts = [];
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function showTab(t){
+  tab = t;
+  $('tabTools').className = 'tab' + (t === 'tools' ? ' on' : '');
+  $('tabPrompts').className = 'tab' + (t === 'prompts' ? ' on' : '');
+  $('toolsSec').style.display = t === 'tools' ? 'block' : 'none';
+  $('promptsSec').style.display = t === 'prompts' ? 'block' : 'none';
+  render();
+}
+function setCat(type, c, btn){
+  if (type === 'tools') toolCat = c; else promptCat = c;
+  $(type === 'tools' ? 'toolChips' : 'promptChips').querySelectorAll('.chip').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  render();
+}
+function render(){ if (tab === 'tools') renderTools(); else renderPrompts(); }
+function renderTools(){
+  const list = TOOLS.filter(t => (toolCat === 'All' || t.c === toolCat) && (t.n + ' ' + t.d + ' ' + t.c).toLowerCase().includes(q));
+  $('count').textContent = list.length + ' of ' + TOOLS.length + ' tools';
+  $('toolGrid').innerHTML = list.length ? list.map(t =>
+    '<a class="card" href="' + t.u + '" target="_blank" rel="noopener"><div class="row"><span class="nm">' + esc(t.n) + '</span><span class="badge p-' + t.p + '">' + t.p + '</span></div><div class="cat">' + t.c + '</div><div class="desc">' + esc(t.d) + '</div><div class="go">Visit →</div></a>'
+  ).join('') : '<div class="empty">No tools match — try another search or category.</div>';
+}
+function renderPrompts(){
+  shownPrompts = PROMPTS.filter(p => (promptCat === 'All' || p.c === promptCat) && (p.t + ' ' + p.x + ' ' + p.c).toLowerCase().includes(q));
+  $('count').textContent = shownPrompts.length + ' of ' + PROMPTS.length + ' prompts';
+  $('promptGrid').innerHTML = shownPrompts.length ? shownPrompts.map((p, i) =>
+    '<div class="card"><div class="row"><span class="nm">' + esc(p.t) + '</span><span class="badge" style="background:#ede9fe;color:#6d28d9">' + p.c + '</span></div><div class="prompt">' + esc(p.x) + '</div><button class="copy" onclick="copyPrompt(this,' + i + ')">📋 Copy prompt</button></div>'
+  ).join('') : '<div class="empty">No prompts match — try another search or category.</div>';
+}
+function copyPrompt(btn, i){
+  const txt = shownPrompts[i].x;
+  const done = () => { btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = '📋 Copy prompt', 1500); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(done).catch(() => fallbackCopy(txt, done));
+  } else fallbackCopy(txt, done);
+}
+function fallbackCopy(txt, done){
+  const ta = document.createElement('textarea');
+  ta.value = txt;
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); done(); } catch (e) {}
+  ta.remove();
+}
+$('q').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); render(); });
+renderTools();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0190c2acb1d3447681b44cb1c8fb3c0a"}'></script><!-- End Cloudflare Web Analytics -->
+<script>
+async function shareTool(btn){
+  var url = location.href, title = document.title;
+  var done = function(msg){ if(!btn) return; var old = btn.textContent; btn.textContent = msg; setTimeout(function(){ btn.textContent = old; }, 1600); };
+  if (navigator.share) {
+    try { await navigator.share({title: title, url: url}); return; }
+    catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  try { await navigator.clipboard.writeText(url); done('Copied ✓'); return; }
+  catch (e) {}
+  var ta = document.createElement('textarea');
+  ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done('Copied ✓'); } catch (e) {}
+  ta.remove();
+}
+</script>
+</body>
+</html>
