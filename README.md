@@ -8,11 +8,11 @@ Find the right AI for the job, and the right words to use it.
 
 ## Features
 
-- **🛠️ AI Tools tab** — 36 curated AI tools across 8 categories: Chat, Image, Video, Code, Writing, Audio, Productivity
+- **🛠️ AI Tools tab** — 37 curated AI tools across 8 categories: Chat, Image, Video, Code, Writing, Audio, Productivity
 - **💬 Prompts tab** — 24 copy-ready prompts across 7 categories: Writing, Coding, Marketing, Study, Business, Image, Fun
 - **Search** — filters both tabs live, with a live result count
 - **Category filters** — one-tap chips for each category
-- **Pricing badges** — Free / Freemium / Paid on every tool card
+- **Pricing badges** — Free / Freemium / Paid or stated model costs on tool cards
 - **One-click copy** — prompt cards copy straight to your clipboard
 - **100% client-side** — single HTML file, no sign-up, no server, nothing uploaded anywhere
 
